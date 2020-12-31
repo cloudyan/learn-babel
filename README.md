@@ -58,6 +58,8 @@ core-js 提供了两种补丁方式。
 
 目前推荐是用 core-js/modules，因为 node_modules 不走 babel 编译，所以 core-js/library 的方式无法为依赖库提供补丁。
 
+对比示例 [babel-7/demo-1](./babel-7/demo-1) vs [babel-7/demo-2](./babel-7/demo-2) 的输出产物
+
 corejs@3 的方式
 
 - core-js/features/set 通过覆盖全局变量的方式提供
@@ -72,3 +74,4 @@ corejs@3 的方式
 - http://2ality.com/2011/12/shim-vs-polyfill.html
 - https://babeljs.io/docs/en/next/babel-preset-env.html
 - https://github.com/zloirock/core-js/tree/v2
+- https://github.com/sl1673495/blogs/issues/13

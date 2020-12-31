@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel src -d dist --preset dev",
-    "babel:auto": "babel src -d dist",
+    "build": "babel src -d dist",
+    "build:cli": "babel src -d dist --preset dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

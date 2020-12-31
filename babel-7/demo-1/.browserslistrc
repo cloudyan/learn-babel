@@ -6,4 +6,4 @@ last 2 versions
 not ie <= 8
 Android >= 4.0
 iOS >= 7
-chrome 80
+# chrome 80
