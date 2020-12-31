@@ -10,8 +10,8 @@
         // "ie": 9,
         "chrome": "60"
       }
-    }],
-    "es2015"
+    }]
+    // "es2015"
   ],
   "plugins": [
     ["transform-runtime", {
