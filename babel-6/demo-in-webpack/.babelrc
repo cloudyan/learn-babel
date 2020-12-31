@@ -8,7 +8,11 @@
       "useBuiltIns": "usage",
       "targets": { // 没去使用 .browserslistrc 的配置
         // "ie": 9,
-        "chrome": "60"
+        // "chrome": "60"
+        "browsers": [
+          // "ie >= 9",
+          "chrome 60"
+        ]
       }
     }]
   ],
