@@ -3,12 +3,21 @@
 学习 babel
 
 - 测试 [jest-use-babel7](https://github.com/cloudyan/jest-use-babel7)
+- 手动按需引入 https://github.com/zloirock/core-js/tree/v2/modules
 
 ## 关于polyfill
 
-polyfill 虽然可以做到按需引入，但不会编译 node_modules 中的模块，所以存在风险
+Babel 编译通常会排除 node_modules，所以 "useBuiltIns": "usage" 存在风险，可能无法为依赖包添加必要的 polyfill。
 
-还有个叫做[polyfill.io](https://polyfill.io/v2/docs/)的神器，只要在浏览器引入 `https://cdn.polyfill.io/v3/polyfill.js` 服务器会更具浏览器的UserAgent返回对应的polyfill文件，很神奇，可以说这是目前最优雅的解决polyfill过大的方案。
+云谦在博客 [Polyfill 方案的过去、现在和未来](https://github.com/sorrycc/blog/issues/80) 也提到一些问题
+
+还有个叫做[polyfill.io](https://polyfill.io/v2/docs/)的神器，只要在浏览器引入 `https://cdn.polyfill.io/v3/polyfill.min.js` 服务器会更具浏览器的UserAgent返回对应的polyfill文件，很神奇，可以说这是目前最优雅的解决polyfill过大的方案。
+
+- https://polyfill.alicdn.com/polyfill.min.js?features=Promise
+  现在覆盖了阿里系的绝大部分webview，以及chrome/safari/firefox/IE/EDGE这些，至于微信的webview还不支持
+- http://polyfill.alicdn.com/modern/polyfill.min.js
+  - 的默认带了es6/es7的比较全的集合，以及只带了基本的polyfill的链接
+- polyfill.io 服务端的成本太大，如果用第三方提供的服务，不敢保证。
 
 ## 配置
 
@@ -38,6 +47,23 @@ polyfill 虽然可以做到按需引入，但不会编译 node_modules 中的模
     ].join('')
   }
 ```
+
+## core-js/library or core-js/modules？
+
+
+core-js 提供了两种补丁方式。
+
+- core-js/library，通过 helper 方法的方式提供
+- core-js/module，通过覆盖全局变量的方式提供
+
+目前推荐是用 core-js/modules，因为 node_modules 不走 babel 编译，所以 core-js/library 的方式无法为依赖库提供补丁。
+
+corejs@3 的方式
+
+- core-js/features/set 通过覆盖全局变量的方式提供
+- import Set from "core-js-pure/features/set"; 通过 helper 方式提示，不污染全局
+
+
 
 参考：
 

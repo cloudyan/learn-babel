@@ -21,7 +21,9 @@ module.exports = function(api) {
     ]
   ]
 
-  const plugins = []
+  const plugins = [
+    // "@babel/transform-runtime"
+  ]
 
   return {
     presets,
