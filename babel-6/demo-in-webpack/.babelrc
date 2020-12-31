@@ -10,7 +10,7 @@
         // "ie": 9,
         // "chrome": "60"
         "browsers": [
-          // "ie >= 9",
+          "ie >= 9",
           "chrome 60"
         ]
       }

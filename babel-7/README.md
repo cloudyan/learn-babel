@@ -15,8 +15,9 @@ babel7进行了较大的改动，废弃了 stage-x的preset，还增加了命名
   - 此时不对 polyfill 做操作。如果引入 @babel/polyfill，则无视配置的浏览器兼容，引入所有的 polyfill。
   - 注：babel7.4会放弃 @babel/polyfill，所以建议直接使用 corejs。
 - `useBuiltIns: 'usage', corejs: 2,`
-  - usage 会根据配置的浏览器兼容，以及你代码中用到的 API 来进行 polyfill，实现了按需引入。
-  - 使用 usage **需要指定 core-js 的版本**, 但无需如下说法，参见 [./demo-in-webpack](./demo-in-webpack)
+  - 使用 usage 会根据配置的浏览器兼容，以及你代码中用到的 API 来进行 polyfill，实现了按需引入。
+  - babel6 中需要手动引入 `import "babel-polyfill";`
+  - babel7中 **需要指定 core-js 的版本**, 但无需如下说法，参见 [./demo-in-webpack](./demo-in-webpack)
   - ~~`corejs: 2` 需要在入口文件手动添加 `import '@babel/polyfill'`，会自动根据 browserslist 替换成浏览器不兼容的所有 polyfill。~~
   - ~~`corejs: 3`, 则 import '@babel/polyfill' 需要改成 `import 'core-js/stable';import 'regenerator-runtime/runtime';`~~
 - `useBuiltIns: entry`
