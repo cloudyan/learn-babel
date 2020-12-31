@@ -4,7 +4,20 @@
 
 - 测试 [jest-use-babel7](https://github.com/cloudyan/jest-use-babel7)
 
+## 关于polyfill
+
+polyfill 虽然可以做到按需引入，但不会编译 node_modules 中的模块，所以存在风险
+
+还有个叫做[polyfill.io](https://polyfill.io/v2/docs/)的神器，只要在浏览器引入 `https://cdn.polyfill.io/v3/polyfill.js` 服务器会更具浏览器的UserAgent返回对应的polyfill文件，很神奇，可以说这是目前最优雅的解决polyfill过大的方案。
+
 ## 配置
+
+关于 defaults
+
+- https://github.com/browserslist/browserslist#best-practices
+  - There is a `defaults` query, which gives a reasonable configuration for most users:
+- https://babeljs.io/docs/en/babel-preset-env#browserslist-integration
+  - Please note that if you are relying on browserslist's `defaults` query (either explicitly or by having no browserslist config), you will want to check out the No targets section for information on preset-env's behavior.
 
 ```js
   // targets 会和 .browserslistrc 配置合并处理

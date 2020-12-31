@@ -7,7 +7,7 @@
    2. 另一个是实例方法例如Array.prototype.includes。
    3. 对于实例方法core-js@2是转换不了的，只有core-js@3才会转换。
 4. babel代码转换依赖plugin，没有plugin的情况下babel做的事情只是 code => code。
-5. plugin 有很多，一个个导入又特别麻烦，这时候使用 preset（是很多plugin的集合）。
+5. plugin 有很多，一个个导入又特别麻烦，这时候使用 preset（预设很多plugin的集合）。
 6. API转换：babel-polyfill 的作用是兼容新的API。
 
 注意: preset是从右往左（数组中从后向前）执行，plugin是从左往右执行，并且plugin先于preset执行
@@ -28,6 +28,23 @@
 - react-hot-loader //虽然它长得不像babel，但是它也需要在babelrc做配置
 
 - babel-polyfill 兼容新的API
+
+注意：
+
+- 通过 plugins 对应的如 `transform-es2015-classes` 插件添加的 polyfill 只会引入到当前模块中，实际开发中存在多个都会引入相同的 polyfill，导致大重复代码出现在项目中
+- 而且不能保证手动引入的 transform 一定正确，所以推荐使用 transform-runtime 方案
+- transform-runtime 依赖 babel-runtime
+- babel-runtime 由三部分组成
+  - core-js  core-js极其强悍，通过ES3实现了大部分的ES5、6、7的垫片，作者zloirock是来自战斗名族的程序员，一个人维护着core-js
+  - regenerator  regenerator来自facebook的一个库，用于实现 generator functions
+  - helpers  babel的一些工具函数，没错，这个helpers和前面使用babel-external-helpers生成的helpers是同一个东西
+
+
+## 比较transform-runtime与babel-polyfill引入垫片的差异：
+
+1. 使用runtime是按需引入，需要用到哪些polyfill，runtime就自动帮你引入哪些，不需要再手动一个个的去配置plugins，只是引入的polyfill不是全局性的，有些局限性。而且runtime引入的polyfill不会改写一些实例方法，比如Object和Array原型链上的方法，像前面提到的Array.protype.includes。
+2. babel-polyfill就能解决runtime的那些问题，它的垫片是全局的，而且全能，基本上ES6中要用到的polyfill在babel-polyfill中都有，它提供了一个完整的ES6+的环境。babel官方建议只要不在意babel-polyfill的体积，最好进行全局引入，因为这是最稳妥的方式。
+3. 一般的建议是开发一些框架或者库的时候使用不会污染全局作用域的babel-runtime，而开发web应用的时候可以全局引入babel-polyfill避免一些不必要的错误，而且大型web应用中全局引入babel-polyfill可能还会减少你打包后的文件体积（相比起各个模块引入重复的polyfill来说）。
 
 ## babel6 中使用 polyfill 的四种方法
 
