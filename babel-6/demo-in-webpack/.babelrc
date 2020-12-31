@@ -1,0 +1,24 @@
+{
+  "presets": [
+    ["env", {
+      // "module": false,
+      // "include": ["es6.map", "es6.array.find-index"],
+      // "include": ["transform-es2015-arrow-functions", "es6.map"],
+      // "exclude": ["transform-regenerator", "es6.set"]
+      "useBuiltIns": "usage",
+      "targets": { // 没去使用 .browserslistrc 的配置
+        // "ie": 9,
+        "chrome": "60"
+      }
+    }],
+    "es2015"
+  ],
+  "plugins": [
+    ["transform-runtime", {
+      "helpers": false, // defaults to true 建议为 false
+      "polyfill": false, // defaults to true 是否开始polyfill，根据你的网站兼容性情况来看，通常我不开启，开启会增加很多额外的代码
+      "regenerator": true, // defaults to true 必须true，否则js就废了
+      "moduleName": "babel-runtime" // defaults to "babel-runtime"
+    }]
+  ]
+}

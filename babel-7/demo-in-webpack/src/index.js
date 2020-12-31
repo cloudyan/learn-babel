@@ -10,3 +10,4 @@ const index = arr2.findIndex(item => item > 3)
 
 console.log(index)
 
+// Promise.resolve().finally()
