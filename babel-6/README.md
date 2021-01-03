@@ -27,7 +27,10 @@
 - babel-preset-react //支持解析react语法
 - react-hot-loader //虽然它长得不像babel，但是它也需要在babelrc做配置
 
-- babel-polyfill 兼容新的API
+- babel-polyfill 是为了兼容新的API
+  - 通过向全局对象和内置对象的prototype上添加方法来模拟完整的 ES2015+ 环境。
+  - polyfill 是依赖core-js的。
+  - babel7.4放弃了@babel/polyfill直接依赖core-js@2或者3。
 
 注意：
 
@@ -48,6 +51,8 @@
 
 ## babel6 中使用 polyfill 的四种方法
 
+使用babel-polify时，需要在你的业务代码中，在使用ES6的新函数 前通过`<script>` 或require 等 引入 babel-polyfill（就像引入jquery一样），她会把promise等函数添加到全局对象上；
+
 1. 直接引入（影响全局，一劳永逸）
    1. 在入口文件中 import 'babel-polyfill' / require('babel-polyfill')。
    2. 使用webpack的话也可以在entry中添加 entry: ['babel-polyfill', 'src/index.js']。
@@ -56,7 +61,7 @@
       2. 会转换实例方法和静态方法，比较全面。
    4. 缺点：
       1. 影响全局作用域。
-      2. 打出来的包比较大，不管用没用到都打进去了。
+      2. 打出来的包比较大，不管用没用到都打进去了。（大概增加 251kb（未压缩））
    5. 使用场景：
       1. 开发业务项目，比较全面，不会漏了从而出问题，比如Object.assign这样的方法在ios8上面还是需要polyfill的。
 2. 在babel-runtime中单独引入
@@ -66,22 +71,23 @@
       1. 该模块私有，不会影响到全局作用域。
       2. 打出来的包因为按需引入包不会很大。
    4. 缺点：
-      1. 因为不影响全局作用域，所以不会转实例和静态方法这样的API。
+      1. 因为不影响全局作用域，所以**不会转实例和静态方法这样的API**。
       2. 手动引入所需，搞不好会漏掉。
    5. 使用场景：
       1. 开发库，框架之类可以使用，因为别人用你的东西然后不知情的情况下你改了别人的全局环境，然后出错了就尴尬了。
-3. 使用[babel-plugin-transform-runtime](https://www.npmjs.com/package/babel-plugin-transform-runtime)按需引入
-   1. 这个插件可不简单，有好几个功能：
-      1. 和插件babel-runtime一样引入的polyfill是私有的，不会影响全局作用域。并且是自动按需引入需要的polyfill，不需要想babel-runtime一样一个一个手动引入。
-      2. 可以提取语法转换时候每个模块都生成的各种helper，成一个引用。
-      3. 自动转换generators/async。
+3. 使用[babel-plugin-transform-runtime](https://www.npmjs.com/package/babel-plugin-transform-runtime)，和插件babel-runtime一样引入的polyfill是私有的，不会影响全局作用域。并且是自动按需引入需要的polyfill，不需要像 babel-runtime 一样一个一个手动引入。
+   1. 这个插件做了三件事：
+      1. 当你使用 generators/async 函数时，自动引入 babel-runtime/regenerator 转换（使用 regenerator 运行时而不会污染当前环境
+      2. 自动引入 babel-runtime/core-js 并映射 ES6 静态方法和内置插件（实现polyfill的功能且无全局污染，但是实例方法无法正常使用，如 "foobar".includes("foo") ）
+      3. 移除内联的 Babel helper 并使用模块 babel-runtime/helpers 代替（提取babel转换语法的代码），这样可以提取语法转换时候每个模块都生成的各种helper，成一个引用。
+      4. 以上分别对应三个配置项，默认为 true `{"regenerator": true, "polyfill": true, "helpers": true}`
    2. 优点：
       1. 该模块私有，不会影响到全局作用域。
       2. 打出来的包因为按需引入包不会很大。
       3. 自动按需引入，不需要手动，防止遗漏。
       4. 提取helper，大大减少冗余代码。
    3. 缺点：
-      1. 因为不影响全局作用域，所以不会转实例和静态方法这样的API。
+      1. 因为不影响全局作用域，所以**不会转实例和静态方法这样的API**。
    4. 使用场景：
       1. 同babel-runtime。
    5. 注：对于polyfill的自动处理和helper的提取都是依赖babel-runtime完成的，所以该插件依赖babel-runtime。
