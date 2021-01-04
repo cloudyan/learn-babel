@@ -25,6 +25,7 @@ babel7进行了较大的改动，废弃了 stage-x的preset，还增加了命名
   - 会被自动分割为各个模块的导入。
 - corejs 默认是 2
   - 该选项只会在 useBuiltIns选项为 usage或者 entry并且 @babel/preset-env正确导入对应的corejs版本的情况下起作用。
+- @babel/polyfill不支持从core-js2到core-js3的平滑过渡，所以在babel 7.4版本中，已经废弃@babel/polyfill(只能用core-js2），而是直接引入core-js3和regenerator-runtime代替。
 
 usage 按需引入。**同样会造成全局污染。**在我的理解中这个选项只是entry的一种增强，不需要在入口手动引入一次，并且可以按照使用特性多少按需引入。
 
