@@ -187,10 +187,10 @@ corejs@3 的方式
 
 参考：
 
-- Babel 7 升级实践 https://blog.hhking.cn/2019/04/02/babel-v7-update/
-- 关于Babel https://github.com/Kehao/Blog/issues/1
-- Polyfill 方案的过去、现在和未来 https://github.com/sorrycc/blog/issues/80
-- babel7的配置与优化 https://github.com/sl1673495/blogs/issues/13
+- [Babel 7 升级实践](https://blog.hhking.cn/2019/04/02/babel-v7-update/)
+- [关于Babel](https://github.com/Kehao/Blog/issues/1)
+- [Polyfill 方案的过去、现在和未来](https://github.com/sorrycc/blog/issues/80)
+- [babel7的配置与优化](https://github.com/sl1673495/blogs/issues/13)
 - http://2ality.com/2011/12/shim-vs-polyfill.html
 - https://babeljs.io/docs/en/next/babel-preset-env.html
 - https://github.com/zloirock/core-js/tree/v2

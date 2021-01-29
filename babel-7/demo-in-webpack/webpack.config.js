@@ -22,6 +22,11 @@ module.exports = {
     new BundleAnalyzerPlugin(),
   ],
   optimization: {
+    // runtimeChunk: 'single', // 创建一个运行时文件，以供所有生成的块共享
+    // runtimeChunk: {
+    //   // name: entrypoint => `runtime~${entrypoint.name}`,
+    //   name: 'runtime'
+    // },
     splitChunks: {
       // chunks: 'all', // 这些都使用默认
       // minSize: 60000, // byte, 30kb
